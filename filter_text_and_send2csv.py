@@ -1,10 +1,30 @@
 import os
 
-chat_txt = 'files/new_chat.txt'
-new_csv = 'files/new_csv.txt'
+chat_txt = 'files/chat.txt'
+new_chat_txt = 'files/new_chat.txt'
+final_chat_csv = 'files/final_chat.csv'
+
 
 # Read in the chat.txt file
 with open(chat_txt, 'r') as f:
+    chat_lines = f.readlines()
+
+# Remove LEFT-TO-RIGHT MARK ([U+200E]) from each line
+modified_lines = []
+for line in chat_lines:
+    modified_line = line.replace('\u200E', '').replace(';', '')  # Remove ; and emojis= U+200E
+    # Only append the line if it doesn't start with '[' and neither 'omitid' nor 'ocultad' are in it
+    if not line.startswith('[') or 'omitid' in line or 'ocultad' in line:
+        continue
+    modified_lines.append(modified_line)
+
+# Write the modified lines back to the original file
+with open(new_chat_txt, 'w') as f:
+    f.writelines(modified_lines)
+
+
+# Read in the chat.txt file
+with open(new_chat_txt, 'r') as f:
     chat_lines = f.readlines()
 
 # Replace the third occurrence of ':' with ';'
@@ -22,5 +42,5 @@ for line in chat_lines:
         modified_lines.append(line)  # Keep the line as is if it doesn't have three parts
 
 # Write the modified lines back to the new CSV file
-with open(new_csv, 'w') as f:
+with open(final_chat_csv, 'w') as f:
     f.writelines(modified_lines)
