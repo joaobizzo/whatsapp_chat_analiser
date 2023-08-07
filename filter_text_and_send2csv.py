@@ -1,5 +1,6 @@
 import os
 import re
+#import emoji
 
 chat_txt = 'files/chat.txt'
 new_chat_txt = 'files/new_chat.txt'
@@ -7,7 +8,7 @@ final_chat_csv = 'files/final_chat.csv'
 
 
 # Read in the chat.txt file
-with open(chat_txt, 'r') as f:
+with open(chat_txt, 'r', encoding='utf-8') as f:
     chat_lines = f.readlines()
 
 # Remove LEFT-TO-RIGHT MARK ([U+200E]) from each line
@@ -53,8 +54,8 @@ modified_lines = [line.replace('; ', ';').replace(' ;', ';') for line in modifie
 # Remove every ~ character
 modified_lines = [line.replace('~', '') for line in modified_lines]
 
-# Filter out lines that contain emojis not changed to \u200E using regular expression
-modified_lines = [line for line in modified_lines if not re.search(r'[^\x00-\x7F]+', line)]
+# Remove every 🦖 character
+modified_lines = [line.replace('🦖', '') for line in modified_lines]
 
 
 # Write the modified lines back to the new CSV file
