@@ -54,6 +54,9 @@ modified_lines = [line.replace('; ', ';').replace(' ;', ';') for line in modifie
 # Remove every ~ character
 modified_lines = [line.replace('~', '') for line in modified_lines]
 
+# Remove every \u202f character
+modified_lines = [line.replace('\u202f', '') for line in modified_lines]
+
 # Remove every 🦖 character
 modified_lines = [line.replace('🦖', '') for line in modified_lines]
 
