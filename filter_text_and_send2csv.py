@@ -46,6 +46,12 @@ modified_lines = [line[:10] + ';' + line[11:] if len(line) > 10 else line for li
 # Change the 20th character to a semicolon
 modified_lines = [line[:19] + ';' + line[20:] if len(line) > 19 else line for line in modified_lines]
 
+# Remove a blank space if it is next to a semicolon
+modified_lines = [line.replace('; ', ';').replace(' ;', ';') for line in modified_lines]
+
+# Remove every ~ character
+modified_lines = [line.replace('~', '') for line in modified_lines]
+
 # Write the modified lines back to the new CSV file
 with open(final_chat_csv, 'w') as f:
     f.writelines(modified_lines)
