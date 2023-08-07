@@ -41,6 +41,9 @@ for line in chat_lines:
     else:
         modified_lines.append(line)  # Keep the line as is if it doesn't have three parts
 
+# Remove '[' and ']' characters from each line
+modified_lines = [line.replace('[', '').replace(']', '') for line in modified_lines]
+
 # Write the modified lines back to the new CSV file
 with open(final_chat_csv, 'w') as f:
     f.writelines(modified_lines)
