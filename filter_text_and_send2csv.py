@@ -44,6 +44,9 @@ for line in chat_lines:
 # Remove '[' and ']' characters from each line
 modified_lines = [line.replace('[', '').replace(']', '') for line in modified_lines]
 
+# Change the 11th character to a semicolon
+modified_lines = [line[:10] + ';' + line[11:] if len(line) > 10 else line for line in modified_lines]
+
 # Write the modified lines back to the new CSV file
 with open(final_chat_csv, 'w') as f:
     f.writelines(modified_lines)
