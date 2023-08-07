@@ -1,4 +1,5 @@
 import os
+import re
 
 chat_txt = 'files/chat.txt'
 new_chat_txt = 'files/new_chat.txt'
@@ -51,6 +52,10 @@ modified_lines = [line.replace('; ', ';').replace(' ;', ';') for line in modifie
 
 # Remove every ~ character
 modified_lines = [line.replace('~', '') for line in modified_lines]
+
+# Filter out lines that contain emojis not changed to \u200E using regular expression
+modified_lines = [line for line in modified_lines if not re.search(r'[^\x00-\x7F]+', line)]
+
 
 # Write the modified lines back to the new CSV file
 with open(final_chat_csv, 'w') as f:
